@@ -6,8 +6,13 @@ name = "pypi"
 [packages]
 flask = "*"
 python-dotenv = "*"
+flask-cors = "*"
+flask-login = "*"
+flask-mongoengine-3 = "*"
+flask-babel = "*"
 
 [dev-packages]
+watchdog = "*"
 
 [requires]
 python_version = "3.13"
