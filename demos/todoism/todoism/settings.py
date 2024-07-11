@@ -7,7 +7,7 @@ class BaseConfig:
   TODOISM_LOCALES = ['en_US', 'zh_Hans_CN']
   TODO_ITEMS_PER_PAGE = 20
 
-  BABEL_DEFAULT_LOCALE = TODOISM_LOCALES[0]
+  BABEL_DEFAULT_LOCALE = TODOISM_LOCALES[1]
 
   SECRET_KEY = os.getenv('secret_key', 'a secret thing')
 
@@ -20,7 +20,7 @@ class BaseConfig:
     }
   ]
 
-class DevelopmenConfig(BaseConfig):
+class DevelopmentConfig(BaseConfig):
   pass
 
 class ProductionConfig(BaseConfig):
@@ -30,7 +30,7 @@ class TestingConfig(BaseConfig):
   TESTING = True
 
 config = {
-  'development': DevelopmenConfig,
+  'development': DevelopmentConfig,
   'production': ProductionConfig,
   'testing': TestingConfig
 }

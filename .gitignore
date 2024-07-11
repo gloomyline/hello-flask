@@ -6,3 +6,8 @@
 
 # secret variables file
 .env
+
+# Translations
+*.mo
+*.po
+*.pot
