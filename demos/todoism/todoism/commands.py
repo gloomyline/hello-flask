@@ -3,8 +3,7 @@
 import os
 
 import click
-from todoism.extensions import db
-from mongoengine import connect
+from mongoengine import disconnect, connect
 
 
 def register_commands(app):
@@ -14,7 +13,8 @@ def register_commands(app):
     """Initialize the database."""
     if drop:
       click.confirm('This operation will delete the database, do you want to continue?', abort=True)
-      connect('todoism')
+      disconnect(alias='default')
+      db = connect('todoism')
       db.drop_database('todoism')
       click.echo('Drop collections.')
 
