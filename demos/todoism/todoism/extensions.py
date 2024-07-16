@@ -28,3 +28,9 @@ def get_locale():
     return locale
   
   return request.accept_languages.best_match(current_app.config['TODOISM_LOCALES'])
+
+
+def register_extensions(app):
+  db.init_app(app)
+  login_manager.init_app(app)
+  babel.init_app(app, locale_selector=get_locale)
