@@ -5,6 +5,14 @@ from werkzeug.http import HTTP_STATUS_CODES
 from todoism.apis.v1 import api_v1
 
 
+def api_respponse(code, message=None, **kwargs):
+  if message is None:
+    message = HTTP_STATUS_CODES.get(code, '')
+
+  response = jsonify(code=code, message=message, **kwargs)
+  response.status_code = 200
+  return response
+
 def api_abort(code, message=None, **kwargs):
   if message is None:
     message = HTTP_STATUS_CODES.get(code, '')
