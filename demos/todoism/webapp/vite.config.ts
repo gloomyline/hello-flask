@@ -11,6 +11,7 @@ import VueRouter from 'unplugin-vue-router/vite'
 import { VueRouterAutoImports } from 'unplugin-vue-router'
 
 export default defineConfig({
+  base: 'static',
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
@@ -60,6 +61,10 @@ export default defineConfig({
     // see uno.config.ts for config
     UnoCSS(),
   ],
+
+  build: {
+    outDir: '../todoism/static',
+  },
 
   // https://github.com/vitest-dev/vitest
   test: {
