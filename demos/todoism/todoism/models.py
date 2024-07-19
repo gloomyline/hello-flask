@@ -21,7 +21,7 @@ class User(db.Document, UserMixin):
     self.password_hash = generate_password_hash(password)
 
   def validate_password(self, password):
-    return check_password_hash(password)
+    return check_password_hash(self.password_hash, password)
 
 
 class Todo(db.Document):

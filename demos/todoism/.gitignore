@@ -1,1 +1,5 @@
-**/*/static
+# web app build static files
+**/*/static/*
+**/*/template/*
+
+# web app packages lock files

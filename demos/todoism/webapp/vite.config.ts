@@ -9,9 +9,10 @@ import UnoCSS from 'unocss/vite'
 import VueMacros from 'unplugin-vue-macros/vite'
 import VueRouter from 'unplugin-vue-router/vite'
 import { VueRouterAutoImports } from 'unplugin-vue-router'
+import copy from 'rollup-plugin-copy';
 
 export default defineConfig({
-  base: 'static',
+  base: '/static',
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
@@ -64,6 +65,15 @@ export default defineConfig({
 
   build: {
     outDir: '../todoism/static',
+    rollupOptions: {
+      plugins: [
+        copy({
+          targets: [
+            { src: '../todoism/static/index.html', dest: '../todoism/template' }
+          ]
+        })
+      ]
+    }
   },
 
   // https://github.com/vitest-dev/vitest

@@ -17,7 +17,8 @@ login_manager.login_message = _l('Please login to access the this page.')
 
 @login_manager.user_loader
 def load_user(user_id):
-  pass
+  from todoism.models import User
+  return User.objects.get_or_404(id=int(user_id))
 
 def get_locale():
   if _c_u.is_authenticated and _c_u.locale is not None:

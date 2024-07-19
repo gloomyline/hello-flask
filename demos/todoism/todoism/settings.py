@@ -4,6 +4,9 @@ import os
 
 
 class BaseConfig:
+  TEMPLATE_FOLDER = '/template'
+  STATIC_URL_PATH = ''
+
   TODOISM_LOCALES = ['en_US', 'zh_Hans_CN']
   TODO_ITEMS_PER_PAGE = 20
 
