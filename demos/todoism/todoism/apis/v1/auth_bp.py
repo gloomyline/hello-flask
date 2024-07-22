@@ -27,7 +27,7 @@ def login():
   data = request.get_json()
   username = data['username']
   password = data['password']
-  user = User.objects.get_or_404(username=username)
+  user = User.objects(username=username).first()
 
   if user is not None and user.validate_password(password):
     login_user(user)
