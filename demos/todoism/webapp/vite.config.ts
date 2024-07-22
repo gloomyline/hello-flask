@@ -12,7 +12,6 @@ import { VueRouterAutoImports } from 'unplugin-vue-router'
 import copy from 'rollup-plugin-copy';
 
 export default defineConfig({
-  base: '/static',
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
@@ -62,6 +61,16 @@ export default defineConfig({
     // see uno.config.ts for config
     UnoCSS(),
   ],
+
+  server: {
+    proxy: {
+      '/api': {
+        target: '//localhost:8888',
+        changeOrigin: true,
+        rewrite: (path) => (path.replace(/^\/api/, ''))
+      }
+    }
+  },
 
   build: {
     outDir: '../todoism/static',

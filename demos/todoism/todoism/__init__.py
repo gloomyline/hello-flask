@@ -15,8 +15,8 @@ def create_app(config_name=None):
     config_name = os.getenv('flask_config', 'development')
 
   # config 
-  # app = Flask('todoism', static_folder='', static_url_path='', template_folder='')
-  app = Flask('todoism')
+  app = Flask('todoism', static_url_path='')
+  # app = Flask('todoism')
   app.config.from_object(config[config_name])
   app.template_folder = app.root_path + app.config['TEMPLATE_FOLDER']
 
