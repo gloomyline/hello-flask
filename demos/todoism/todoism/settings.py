@@ -5,12 +5,11 @@ import os
 
 class BaseConfig:
   TEMPLATE_FOLDER = '/template'
-  STATIC_URL_PATH = ''
 
   TODOISM_LOCALES = ['en_US', 'zh_Hans_CN']
-  TODO_ITEMS_PER_PAGE = 20
-
   BABEL_DEFAULT_LOCALE = TODOISM_LOCALES[1]
+
+  TODO_ITEMS_PER_PAGE = 20
 
   SECRET_KEY = os.getenv('secret_key', 'a secret thing')
 
