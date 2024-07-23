@@ -10,6 +10,9 @@ flask-cors = "*"
 flask-login = "*"
 flask-mongoengine-3 = "*"
 flask-babel = "*"
+flask-sqlalchemy = "*"
+bootstrap-flask = "*"
+flask-moment = "*"
 
 [dev-packages]
 watchdog = "*"
