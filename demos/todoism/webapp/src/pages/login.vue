@@ -34,12 +34,6 @@ const username = ref<string>('');
 const password = ref<string>('');
 
 async function  login () {
-  if (!username) {
-    return alert('Please input username.');
-  }
-  if (!password) {
-    return alert('Please input password.');
-  }
   const response = await _login({ username: unref(username), password: unref(password) });
   console.log(111, response);
 }

@@ -22,7 +22,7 @@ def validate_token(token):
     data = s.loads(token)
   except (BadSignature, SignatureExpired):
     return False
-  user = User.objects.get_or_404(data['id'])
+  user = User.objects(id=data['id']).first()
   if user is None:
     return False
   g.current_user = user

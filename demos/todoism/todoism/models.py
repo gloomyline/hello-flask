@@ -17,6 +17,9 @@ class User(db.Document, UserMixin):
   )
   locale = db.StringField(max_length=20)
 
+  def __repr__(self):
+    return '<User %r>' % self.usernmae
+
   def set_password(self, password):
     self.password_hash = generate_password_hash(password)
 

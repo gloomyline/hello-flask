@@ -3,7 +3,7 @@
 import os
 
 from flask import current_app, request
-from flask_login import LoginManager, current_user as _c_u
+from flask_login import LoginManager, current_user
 from flask_babel import Babel, lazy_gettext as _l
 from flask_mongoengine import MongoEngine
 
@@ -21,8 +21,8 @@ def load_user(user_id):
   return User.objects.get_or_404(id=int(user_id))
 
 def get_locale():
-  if _c_u.is_authenticated and _c_u.locale is not None:
-    return _c_u.locale
+  if current_user.is_authenticated and current_user.locale is not None:
+    return current_user.locale
 
   locale = request.cookies.get('locale')
   if locale is not None:
