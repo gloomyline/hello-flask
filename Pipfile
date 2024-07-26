@@ -17,6 +17,9 @@ flask-migrate = "*"
 flask-ckeditor = "*"
 bleach = "*"
 flask-mail = "*"
+flask-avatars = "*"
+flask-whooshee = "*"
+flask-dropzone = "*"
 
 [dev-packages]
 watchdog = "*"
