@@ -2,7 +2,7 @@
 ./.venv
 
 # packages lock file
-*.lock
+# *.lock
 
 # secret variables file
 .env

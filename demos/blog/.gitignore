@@ -1,0 +1,15 @@
+# local environment variables
+.env
+
+# database files
+*.db
+# sql files
+*.sql
+
+# upload files
+uploads/*
+!uploads/.gitkeep
+
+# log files
+logs/*
+!logs/.gitkeep

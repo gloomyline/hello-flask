@@ -13,10 +13,15 @@ flask-babel = "*"
 flask-sqlalchemy = "*"
 bootstrap-flask = "*"
 flask-moment = "*"
+flask-migrate = "*"
+flask-ckeditor = "*"
+bleach = "*"
+flask-mail = "*"
 
 [dev-packages]
 watchdog = "*"
 faker = "*"
+flask-debugtoolbar = "*"
 
 [requires]
 python_version = "3.13"
