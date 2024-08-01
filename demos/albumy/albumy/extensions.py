@@ -32,3 +32,7 @@ debug_toolbar = DebugToolbarExtension()
 def load_user(user_id):
   from albumy.models import User
   return User.query.get(int(user_id))
+
+login_manager.login_view = 'auth.login'
+login_manager.login_message = 'Please go to login~'
+login_manager.login_message_category = 'warning'

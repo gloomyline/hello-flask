@@ -68,6 +68,8 @@ class BaseConfig:
 
     WHOOSHEE_MIN_STRING_LEN = 1
 
+    DEBUG_TB_INTERCEPT_REDIRECTS = False
+
 
 class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = \

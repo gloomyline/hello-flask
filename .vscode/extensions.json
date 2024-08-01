@@ -3,6 +3,7 @@
     "rickywhite.python-template-snippets",
     "ms-python.python",
     "ms-python.debugpy",
-    "alexcvzz.vscode-sqlite"
+    "alexcvzz.vscode-sqlite",
+    "samuelcolvin.jinjahtml"
   ]
 }

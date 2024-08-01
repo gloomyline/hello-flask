@@ -11,3 +11,9 @@
 *.mo
 *.po
 *.pot
+
+# pratice files
+test.*
+
+# pycache files
+__pycache__/

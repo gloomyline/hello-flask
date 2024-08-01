@@ -1,0 +1,15 @@
+# upload files
+uploads/*
+!uploads/avatars
+!uploads/.gitkeep
+
+# upload avatars
+uploads/avatars/*
+!uploads/avatars/.gitkeep
+
+# db files
+*.db
+
+# whooshee files
+whooshee/*
+!whooshee/.gitkeep
