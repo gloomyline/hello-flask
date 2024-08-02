@@ -103,9 +103,9 @@ class User(db.Model, UserMixin):
   active = db.Column(db.Boolean, default=True)
 
   public_collections = db.Column(db.Boolean, default=True)
-  receive_comment_notifications = db.Column(db.Boolean, default=True)
-  receive_follow_notifications = db.Column(db.Boolean, default=True)
-  receive_collect_notifications = db.Column(db.Boolean, default=True)
+  receive_comment_notification = db.Column(db.Boolean, default=True)
+  receive_follow_notification = db.Column(db.Boolean, default=True)
+  receive_collect_notification = db.Column(db.Boolean, default=True)
 
   role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
 
@@ -154,7 +154,7 @@ class User(db.Model, UserMixin):
       return False
     return self.following.filter_by(followed_id=user.id).first() is not None
 
-  def is_followd_by(self, user):
+  def is_followed_by(self, user):
     return self.followers.filter_by(follower_id=user.id).first() is not None
 
   @property
@@ -204,7 +204,7 @@ class User(db.Model, UserMixin):
     return self.active
 
   def can(self, permission_name):
-    permission = Permission.query.filter_by(name=permission_name)
+    permission = Permission.query.filter_by(name=permission_name).first_or_404()
     return permission is not None and self.role is not None and permission in self.role.permissions
 
 

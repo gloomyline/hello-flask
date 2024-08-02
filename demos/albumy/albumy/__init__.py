@@ -13,8 +13,8 @@ from flask_login import current_user
 
 from albumy.settings import config
 from albumy.extensions import db, login_manager, bootstrap, moment, \
-  mail, csrf, avatars, whooshee, debug_toolbar
-from albumy.models import Notification, Role
+  mail, csrf, avatars, whooshee, migrate, debug_toolbar
+from albumy.models import Collect, Comment, Follow, Notification, Photo, Role, Tag, User
 from albumy.blueprints.main import main_bp
 from albumy.blueprints.auth import auth_bp
 from albumy.blueprints.user import user_bp
@@ -47,6 +47,7 @@ def register_extensions(app):
   csrf.init_app(app)
   avatars.init_app(app)
   whooshee.init_app(app)
+  migrate.init_app(app, db)
   debug_toolbar.init_app(app)
 
 
@@ -117,7 +118,11 @@ def register_errorhandlers(app):
 
 
 def register_shell_context(app):
-  pass
+  @app.shell_context_processor
+  def make_shell_context():
+    return dict(db=db, User=User, Photo=Photo, Tag=Tag,
+                Follow=Follow, Collect=Collect, Comment=Comment,
+                Notification=Notification)
 
 def register_template_context(app):
   @app.context_processor
