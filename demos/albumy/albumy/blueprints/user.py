@@ -115,9 +115,10 @@ def edit_profile():
     current_user.bio = form.bio.data
     current_user.website = form.website.data
     current_user.location = form.location.data
-    db.sesion.commit()
+    db.session.commit()
     flash('Profile updated.', 'success')
-    return redirect(url_for('.index', username=current_user.username))
+    # return redirect(url_for('.index', username=current_user.username))
+    return redirect(request.full_path)
   form.name.data = current_user.name
   form.username.data = current_user.username
   form.bio.data = current_user.bio

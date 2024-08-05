@@ -20,7 +20,7 @@ class EditProfileForm(FlaskForm):
   username = StringField('Username', validators=[
     DataRequired(),
     Length(1, 20),
-    Regexp('^[a_zA_Z0_9.]*$', message='The username should only contain alphanumeric and dot.')
+    Regexp('^[a-zA-Z0-9.]*$', message='The username should only contain alphanumeric and dot.')
   ])
   website = StringField('Website', validators=[Optional(), Length(0, 255)])
   location = StringField('City', validators=[Optional(), Length(0, 50)])
