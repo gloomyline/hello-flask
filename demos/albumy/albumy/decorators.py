@@ -12,6 +12,7 @@ from flask import abort, flash, redirect, url_for
 from flask_login import current_user
 from markupsafe import Markup
 
+
 def confirm_required(func):
   @wraps(func)
   def decorated_func(*args, **kwargs):
@@ -37,3 +38,7 @@ def permission_required(permission_name):
       return func(*args, **kwargs)
     return decorated_func
   return decorator
+
+
+def admin_required(func):
+  return permission_required('ADMINISTRATOR')(func)

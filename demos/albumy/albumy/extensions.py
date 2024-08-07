@@ -14,6 +14,7 @@ from flask_mail import Mail
 from flask_wtf import CSRFProtect
 from flask_avatars import Avatars
 from flask_whooshee import Whooshee
+from flask_dropzone import Dropzone
 from flask_migrate import Migrate
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -26,6 +27,7 @@ mail = Mail()
 csrf = CSRFProtect()
 avatars = Avatars()
 whooshee = Whooshee()
+dropzone = Dropzone()
 migrate = Migrate()
 debug_toolbar = DebugToolbarExtension()
 

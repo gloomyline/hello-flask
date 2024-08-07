@@ -44,9 +44,9 @@ def re_authenticate():
     return redirect(url_for('main.index'))
 
   form = LoginForm()
-  if form.validate_on_submit() and current_user.validate(form.password.data):
+  if form.validate_on_submit() and current_user.validate_password(form.password.data):
     confirm_login()
-    return redirect_back
+    return redirect_back()
   return render_template('auth/login.html', form=form)
 
 

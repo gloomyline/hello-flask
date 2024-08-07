@@ -13,17 +13,18 @@ from flask_login import current_user
 
 from albumy.settings import config
 from albumy.extensions import db, login_manager, bootstrap, moment, \
-  mail, csrf, avatars, whooshee, migrate, debug_toolbar
+  mail, csrf, avatars, whooshee, dropzone, migrate, debug_toolbar
 from albumy.models import Collect, Comment, Follow, Notification, Photo, Role, Tag, User
 from albumy.blueprints.main import main_bp
 from albumy.blueprints.auth import auth_bp
 from albumy.blueprints.user import user_bp
 from albumy.blueprints.ajax import ajax_bp
+from albumy.blueprints.admin import admin_bp
 
 
 def create_app(config_name=None):
   if config_name is None:
-    config_name = os.getenv('FLASK_CONFIG', 'development')
+    config_name = os.getenv('FLASK_ENV', 'development')
 
   app = Flask('albumy')
 
@@ -47,6 +48,7 @@ def register_extensions(app):
   csrf.init_app(app)
   avatars.init_app(app)
   whooshee.init_app(app)
+  dropzone.init_app(app)
   migrate.init_app(app, db)
   debug_toolbar.init_app(app)
 
@@ -56,6 +58,7 @@ def register_blueprints(app):
   app.register_blueprint(auth_bp, url_prefix='/auth')
   app.register_blueprint(user_bp, url_prefix='/user')
   app.register_blueprint(ajax_bp, url_prefix='/api')
+  app.register_blueprint(admin_bp, url_prefix='/admin')
 
 
 def register_commands(app):
@@ -131,4 +134,4 @@ def register_template_context(app):
       notification_count = Notification.query.with_parent(current_user).filter_by(is_read=False).count()
     else:
       notification_count = None
-    return dict(notification_count=notification_count)
+    return dict(notification_count=notification_count, is_development=app.config['DEBUG'])

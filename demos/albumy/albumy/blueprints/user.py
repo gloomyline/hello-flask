@@ -222,9 +222,9 @@ def notification_setting():
     db.session.commit()
     flash('Notification settings updated.', 'success')
     return redirect(url_for('.index', username=current_user.username))
-  form.receive_collect_notification = current_user.receive_collect_notification
-  form.receive_follow_notification = current_user.receive_follow_notification
-  form.receive_comment_notification = current_user.receive_comment_notification
+  form.receive_collect_notification.data = current_user.receive_collect_notification
+  form.receive_follow_notification.data = current_user.receive_follow_notification
+  form.receive_comment_notification.data = current_user.receive_comment_notification
   return render_template('user/settings/edit_notification.html', form=form)
 
 
@@ -236,7 +236,7 @@ def privacy_setting():
     current_user.public_collections = form.public_collections.data
     db.session.commit()
     flash('Privacy setting updated.', 'success')
-    return redirect('.index', username=current_user.username)
+    return redirect(url_for('.index', username=current_user.username))
   form.public_collections.data = current_user.public_collections
   return render_template('user/settings/edit_privacy.html', form=form)
 

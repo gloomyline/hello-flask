@@ -33,14 +33,26 @@ def get_profile(user_id):
 @ajax_bp.route('/followers-count/<int:user_id>')
 def followers_count(user_id):
   user = User.query.get_or_404(user_id)
-  count = user.followers.count()
+  count = user.followers.count() - 1
   return jsonify(count=count)
 
 
 @ajax_bp.route('/photo/<int:photo_id>/collectors-count')
 def collectors_count(photo_id):
   photo = Photo.query.get_or_404(photo_id)
-  count = photo.collectors.count()
+  count = len(photo.collectors)
+  return jsonify(count=count)
+
+
+@ajax_bp.route('/my-collections-count')
+def my_photos_count():
+  count = len(current_user.collections)
+  return jsonify(count=count)
+
+
+@ajax_bp.route('/my-followings-count')
+def my_followings_count():
+  count = current_user.following.count()
   return jsonify(count=count)
 
 

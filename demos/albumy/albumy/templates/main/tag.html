@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% from 'bootstrap4/pagination.html' import render_pagination %}
+{% from 'bootstrap4/form.html' import render_form %}
+{% from 'macros.html' import photo_card with context %}
+
+{% block title %}{{ tag.name }}{% endblock title %}
+
+{% block content %}
+  <div class="page-header">
+    <div class="page-header">
+      <small class="text-muted"> {{ tag.photos|length }} photos</small>
+      {# {% if current_user.can('MODERATE') %}
+        <a href="{{ url_for('admin.delete_tag', tag_id=tag.id) }}"
+          class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+      {% endif %} #}
+      <div class="dropdown">
+        <button class="btn btn-secondary btn-sm" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="true">
+          Order by {{ order_rule }}&nbsp;&nbsp;&nbsp;<span class="oi oi-elevator"></span>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          {% if order_rule == 'collects' %}
+            <a href="{{ url_for('.show_tag', tag_id=tag.id, order='by_time') }}" class="dropdown-item">Order by Time</a>
+          {% else %}
+            <a href="{{ url_for('.show_tag', tag_id=tag.id, order='by_collects') }}" class="dropdown-item">Order by Collects</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>  
+  <div class="row">
+    {% for photo in photos %}
+      {{ photo_card(photo) }} 
+    {% endfor %}
+  </div>
+  <div class="page-footer">
+    {{ render_pagination(pagination, align='center') }}
+  </div>
+{% endblock content %}

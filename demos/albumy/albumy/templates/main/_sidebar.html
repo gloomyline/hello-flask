@@ -12,10 +12,16 @@
       </div>
     </div>
     <a class="card-link" href="{{ url_for('user.index', username=current_user.username) }}">
-      <span class="oi oi-home"></span> My Photos
+      <span class="oi oi-home"></span> My Photos <span id="my-photos-count" class="text-muted float-right">{{ current_user.photos|length}}</span>
     </a><hr>
-    <a href="card-link" href="{{ url_for('user.show_collections', username=current_user.username) }}">
-      <span class="oi oi-star">My Collections</span>
+    <a class="card-link" href="{{ url_for('user.show_collections', username=current_user.username) }}">
+      <span class="oi oi-star"></span> My Collections <span id="my-collections-count" class="text-muted float-right">{{ current_user.collections|length }}</span>
+    </a><hr>
+    <a class="card-link" href="{{ url_for('user.show_following', username=current_user.username) }}">
+      <span class="oi oi-people"></span> My Followings <span id="my-followings-count" class="text-muted float-right">{{ current_user.following.count() }}</span>
+    </a><hr>
+    <a class="card-link" href="{{ url_for('user.show_followers', username=current_user.username) }}">
+      <span class="oi oi-person"></span> My Followers <span id="my-followers-count" class="text-muted float-right">{{ current_user.followers.count() }}</span>
     </a>
   </div>
 </div>

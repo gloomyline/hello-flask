@@ -64,14 +64,14 @@
                                 <span class="oi oi-person"></span> My Home
                             </a>
                             <div class="dropdown-divider"></div>
-                            {# <a class="dropdown-item" href="{{ url_for('user.edit_profile') }}">
+                            <a class="dropdown-item" href="{{ url_for('user.edit_profile') }}">
                                 <span class="oi oi-cog"></span> Settings
-                            </a> #}
-                            {# {% if current_user.can('MODERATE') %}
+                            </a>
+                            {% if current_user.can('MODERATE') %}
                                 <a class="dropdown-item" href="{{ url_for('admin.index') }}">
                                     <span class="oi oi-dashboard"></span> Dashboard
                                 </a>
-                            {% endif %} #}
+                            {% endif %}
                             <a class="dropdown-item" href="{{ url_for('auth.logout') }}">
                                 <span class="oi oi-power-standby"></span> Logout
                             </a>
@@ -87,7 +87,7 @@
     </nav>
 {% endblock %}
 
-<main class="pt-3">
+<main>
     <div class="container">
         {% for message in get_flashed_messages(with_categories=True) %}
             <div class="alert alert-{{ message[0] }}">
@@ -114,10 +114,9 @@
 <div id="toast"></div>
 
 {% block scripts %}
-    <!-- <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script> -->
-    {{ bootstrap.load_js() }}
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     {{ moment.include_moment(local_js=url_for('static', filename='js/moment-with-locales.min.js')) }}
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script type="text/javascript">
@@ -126,6 +125,11 @@
             var is_authenticated = true;
         {% else %}
             var is_authenticated = false;
+        {% endif %}
+        {% if is_development %}
+            var is_development = true;
+        {% else %}
+            var is_development = false;
         {% endif %}
     </script>
 {% endblock %}

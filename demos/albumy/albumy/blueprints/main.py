@@ -12,7 +12,7 @@ from flask_login import current_user, login_required
 from sqlalchemy import func
 
 from albumy.extensions import db
-from albumy.models import Comment, Follow, Notification, Photo, Tag, User
+from albumy.models import Collect, Comment, Follow, Notification, Photo, Tag, User
 from albumy.forms.main import CommentForm, TagForm, DescriptionForm
 from albumy.decorators import confirm_required, permission_required
 from albumy.notifications import push_collect_notification, push_comment_notification
@@ -50,7 +50,7 @@ def explore():
 
 @main_bp.route('/search')
 def search():
-  q = request.form.get('q', '', type=str).strip()
+  q = request.args.get('q', '', type=str).strip()
   if q == '':
     flash('Enter keyword about photo, user or tag', 'warning')
     return redirect_back()
@@ -155,7 +155,7 @@ def show_photo(photo_id):
   tag_form = TagForm()
 
   description_form.description.data = photo.description
-  return render_template('main/show_photo.html', photo=photo,
+  return render_template('main/photo.html', photo=photo,
                           comments=comments, pagination=pagination, tag_form = tag_form,
                           comment_form=comment_form, description_form=description_form,
                         )
@@ -237,13 +237,13 @@ def report_photo(photo_id):
   return redirect(url_for('.show_photo', photo_id=photo_id))
 
 
-@main_bp.route('/photo/<int:photo_id>/collectors', methods=['POST'])
+@main_bp.route('/photo/<int:photo_id>/collectors')
 def show_collectors(photo_id):
   photo = Photo.query.get_or_404(photo_id)
   page = request.args.get('page', 1, type=int)
   per_page = current_app.config['ALBUMY_USER_PER_PAGE']
-  pagination = User.query.with_parent(photo) \
-                .order_by(User.timestamp.asc()).paginate(page, per_page)
+  pagination = Collect.query.with_parent(photo) \
+                .order_by(Collect.timestamp.asc()).paginate(page=page, per_page=per_page)
   collects = pagination.items
   return render_template('main/collectors.html', collects=collects, pagination=pagination, photo=photo)
 
