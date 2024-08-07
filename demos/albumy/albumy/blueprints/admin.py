@@ -83,7 +83,7 @@ def edit_profile_admin(user_id):
 def block_user(user_id):
   user = User.query.get_or_404(user_id)
   if user.role.name in ['Administrator', 'Moderator']:
-    flash('Permission denied.', 'warning')
+    flash('Permiss denied.', 'warning')
   else:
     user.block()
     flash('Account blocked.', 'info')
@@ -147,7 +147,7 @@ def manage_user():
   if filter_rule == 'locked':
     filter_users = User.query.filter_by(locked=True)
   elif filter_rule == 'blocked': 
-    filter_users = User.query.filter_by(blocked=True)
+    filter_users = User.query.filter_by(active=False)
   elif filter_rule == 'administrator':
     filter_users = User.query.with_parent(administrator)
   elif filter_rule == 'moderator':
@@ -158,7 +158,7 @@ def manage_user():
   pagination = filter_users.order_by(User.member_since.desc()) \
                           .paginate(page=page, per_page=per_page)
   users = pagination.items
-  return render_template('admin/manage_user.html', users=users, pagination=pagination)
+  return render_template('admin/manage_user.html', users=enumerate(users), pagination=pagination)
 
 
 @admin_bp.route('/manage/photo', defaults={'order': 'by_flag'})
@@ -168,6 +168,7 @@ def manage_user():
 def manage_photo(order):
   page = request.args.get('page', 1, type=int)
   per_page = current_app.config['ALBUMY_MANAGE_PHOTO_PER_PAGE']
+  order_rule = 'flag'
   if order == 'by_time':
     pagination = Photo.query.order_by(Photo.timestamp.desc()) \
                               .paginate(page=page, per_page=per_page)
@@ -176,19 +177,26 @@ def manage_photo(order):
     pagination = Photo.query.order_by(Photo.flag.desc()) \
                               .paginate(page=page, per_page=per_page)
   photos = pagination.items
-  return render_template('admin/manage_photo.html', photos=photos, pagination=pagination, order_rule=order_rule)
+  return render_template('admin/manage_photo.html', photos=enumerate(photos), pagination=pagination, order_rule=order_rule)
 
 
-@admin_bp.route('/manage/tag')
+@admin_bp.route('/manage/tag', defaults={'order': 'desc'})
+@admin_bp.route('/manage/tag/<order>')
 @login_required
 @permission_required('MODERATE')
-def manage_tag():
+def manage_tag(order):
   page = request.args.get('page', 1, type=int)
   per_page = current_app.config['ALBUMY_MANAGE_TAG_PER_PAGE']
-  pagination = Tag.query.order_by(Tag.id.desc()) \
-                          .paginate(page=page, per_page=per_page)
+  order_rule = 'desc'
+  if order == 'desc':
+    pagination = Tag.query.order_by(Tag.id.desc()) \
+                            .paginate(page=page, per_page=per_page)
+  else:
+    pagination = Tag.query.order_by(Tag.id.asc()) \
+                            .paginate(page=page, per_page=per_page)
+    order_rule = 'asc'
   tags = pagination.items
-  return render_template('admin/manage_tag.html', tags=tags, pagination=pagination)
+  return render_template('admin/manage_tag.html', tags=tags, pagination=pagination, order_rule=order_rule)
 
 
 @admin_bp.route('/manage/comment', defaults={'order': 'by_flag'})
@@ -198,6 +206,7 @@ def manage_tag():
 def manage_comment(order):
   page = request.args.get('page', 1, type=int)
   per_page = current_app.config['ALBUMY_MANAGE_COMMENT_PER_PAGE']
+  order_rule = 'flag'
   if order == 'by_time':
     pagination = Comment.query.order_by(Comment.timestamp.desc()) \
                                 .paginate(page=page, per_page=per_page)
@@ -207,4 +216,4 @@ def manage_comment(order):
                                 .paginate(page=page, per_page=per_page)
   comments = pagination.items
   return render_template('admin/manage_comment.html',
-          pagination=pagination, commnets=comments, order_rule=order_rule)
+          pagination=pagination, comments=enumerate(comments), order_rule=order_rule)

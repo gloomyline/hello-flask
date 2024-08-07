@@ -45,9 +45,11 @@
     </ul>
   </div>
   {% if users %}
-    <table class="table table-striped">
+    <table class="table table-bordered table-striped table-hover">
+      <caption>List of users.</caption>
       <thead>
         <tr>
+          <th>#</th>
           <th>Avatar</th>
           <th>Name/username</th>
           <th>Role</th>
@@ -58,8 +60,10 @@
           <th>Actions</th>
         </tr>
       </thead>
-      {% for user in users %}
-        <tr>
+      <tbody>
+      {% for index, user in users %}
+        <tr class="{% if user.is_admin %}table-active{% endif %}">
+          <td scope="row">{{ index + 1 }}</td>
           <td><img src="{{ url_for('main.get_avatar', filename=user.avatar_s) }}" /></td>
           <td>{{ user.name }}<br>{{ user.username }}</td>
           <td>{{ user.role.name }}</td>
@@ -94,15 +98,16 @@
                 </form>
               {% endif %}
             {% endif %}
-            <a href="mailto:{{ user.email }}" class="btn btn-ligth btn-sm">Email</a>
+            <a href="mailto:{{ user.email }}" class="btn btn-light btn-sm">Email</a>
             {% if current_user.is_admin %}
-              <a href="{{ url_for('admin.edit_profile_admin', user_id=user.id) }}" class="btn btn-waring btn-sm">Edit Profile</a> 
+              <a href="{{ url_for('admin.edit_profile_admin', user_id=user.id) }}" class="btn btn-warning btn-sm">Edit Profile</a> 
             {% endif %}
           </td>
         </tr> 
       {% endfor %}
+      </tbody>
     </table> 
-    <div class="page-footer">{{ render_pagination(pagination) }}</div>
+    <div class="page-footer">{{ render_pagination(pagination, align='center') }}</div>
   {% else %}
     <div class="tip"><h5>No users.</h5></div>
   {% endif %}

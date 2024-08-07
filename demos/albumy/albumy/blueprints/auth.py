@@ -30,6 +30,7 @@ def login():
     if user is not None and user.validate_password(form.password.data):
       if login_user(user, form.remember_me.data):
         flash('Login success', 'info')
+        return redirect_back()
       else:
         flash('Your account is blocked.', 'warning')
         return redirect(url_for('main.index'))

@@ -187,6 +187,14 @@ class User(db.Model, UserMixin):
     self.role = Role.query.filter_by(name='User').first()
     db.session.commit()
 
+  def block(self):
+    self.active = False
+    db.session.commit()
+
+  def unblock(self):
+    self.active = True
+    db.session.commit()
+
   def generate_avatar(self):
     avatar = Identicon()
     filenames = avatar.generate(text=self.username)

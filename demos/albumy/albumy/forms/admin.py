@@ -27,9 +27,9 @@ class EditProfileAdminForm(EditProfileForm):
     self.user = user
 
 
-  # def validate_username(self, field):
-  #   if field.data != self.user.username and User.query.filter_by(username=field.data).first():
-  #     return ValidationError('The username already exists')
+  def validate_username(self, field):
+    if field.data != self.user.username and User.query.filter_by(username=field.data).first():
+      return ValidationError('The username already exists')
 
 
   def validate_email(self, field):
