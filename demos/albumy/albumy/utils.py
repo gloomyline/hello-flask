@@ -6,7 +6,6 @@
 @Author  :   Alan
 @Desc    :   None
 '''
-from json import dumps
 import os
 import uuid
 import PIL
@@ -14,7 +13,6 @@ import PIL
 from PIL import Image
 from urllib.parse import urljoin, urlparse
 import PIL.Image
-import click
 from itsdangerous import BadSignature, SignatureExpired
 from itsdangerous import URLSafeSerializer as Serializer 
 from flask import current_app, flash, redirect, request, url_for
