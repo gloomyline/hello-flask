@@ -164,8 +164,8 @@ def show_photo(photo_id):
 @main_bp.route('/photo/n/<int:photo_id>')
 def photo_next(photo_id):
   photo = Photo.query.get_or_404(photo_id)
-  photo_n = Photo.query.with_parent(photo.author).filter(Photo.id < photo_id) \
-                        .order_by(Photo.id.desc()).first()
+  photo_n = Photo.query.with_parent(photo.author).filter(Photo.id > photo_id) \
+                        .order_by(Photo.id.asc()).first()
   if photo_n is None:
     flash('It is already the last one.', 'info')
     return redirect(url_for('.show_photo', photo_id=photo.id))
@@ -175,8 +175,8 @@ def photo_next(photo_id):
 @main_bp.route('/photo/p/<int:photo_id>')
 def photo_prev(photo_id):
   photo = Photo.query.get_or_404(photo_id)
-  photo_p = Photo.query.with_parent(photo.author).filter(Photo.id > photo_id) \
-                        .order_by(Photo.id.asc()).first()
+  photo_p = Photo.query.with_parent(photo.author).filter(Photo.id < photo_id) \
+                        .order_by(Photo.id.desc()).first()
   if photo_p is None:
     flash('It is already the last one.', 'info')
     return redirect(url_for('.show_photo', photo_id=photo.id))
@@ -195,7 +195,7 @@ def collect(photo_id):
 
   current_user.collect(photo)
   flash('Photo collected', 'success')
-  if current_user != photo.author and photo.author.receive_collect_notifications:
+  if current_user != photo.author and photo.author.receive_collect_notification:
     push_collect_notification(
       collector=current_user, photo_id=photo_id, receiver=photo.author
     )
@@ -248,7 +248,7 @@ def show_collectors(photo_id):
   return render_template('main/collectors.html', collects=collects, pagination=pagination, photo=photo)
 
 
-@main_bp.route('/photo/<int:photo_id>/edit-description')
+@main_bp.route('/photo/<int:photo_id>/edit-description', methods=['POST'])
 @login_required
 def edit_description(photo_id):
   photo = Photo.query.get_or_404(photo_id)
@@ -280,7 +280,7 @@ def new_comment(photo_id):
     if replied_id:
       comment.replied = Comment.query.get_or_404(replied_id)
       if comment.replied.author.receive_comment_notification:
-        push_comment_notification(photo=photo, receiver=comment.replied.author, page=page)
+        push_comment_notification(photo_id=photo_id, receiver=comment.replied.author, page=page)
 
     db.session.add(comment)
     db.session.commit()
@@ -303,7 +303,7 @@ def new_tag(photo_id):
   form = TagForm()
   if form.validate_on_submit():
     for name in form.tag.data.split():
-      tag = Tag.query.filter_by(name=name).first
+      tag = Tag.query.filter_by(name=name).first()
       if tag is None:
         tag = Tag(name=name)
         db.session.add(tag)

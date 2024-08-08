@@ -54,7 +54,7 @@
     <div id="tags">
       <p>
         {% if photo.tags %}
-          {% for tag in tags %}
+          {% for tag in photo.tags %}
             <a href="{{ url_for('.show_tag', tag_id=tag.id) }}"
               class="badge badge-light" target="_blank">
               <span class="oi oi-tag"></span>{{ tag.name }}</a> 

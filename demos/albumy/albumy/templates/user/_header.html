@@ -1,5 +1,5 @@
 {% from 'macros.html' import follow_area with context %}
-{% from 'bootstrap/nav.html' import render_nav_item %}
+{% from 'bootstrap4/nav.html' import render_nav_item %}
 
 <div class="row mb-3">
   <div class="col-md-3">
@@ -29,7 +29,7 @@
     </p>
     <div>
       {% if current_user != user %}
-        {# {% if current_user.can('MODERATE') %}
+        {% if current_user.can('MODERATE') %}
           {% if user.locked %}
             <form class="inline" method="post"
               action="{{ url_for('admin.unlock_user', user_id=user.id) }}">
@@ -61,7 +61,7 @@
         {% if current_user.is_admin %}
           <a class="btn btn-warning btn-sm"
             href="{{ url_for('admin.edit_profile_admin', user_id=user.id) }}">Edit Profile.</a>
-        {% endif %} #}
+        {% endif %}
       {% endif %}
       <div class="float-right">
         {{ follow_area(user) }}

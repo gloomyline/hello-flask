@@ -191,10 +191,10 @@ def change_email_request():
   form = ChangeEmailForm()
   if form.validate_on_submit():
     token = generate_token(
-      user=current_user, option=Operations.CHANGE_EMAIL,
+      user=current_user, operation=Operations.CHANGE_EMAIL,
       new_email=form.email.data.lower()
     )
-    send_change_email(to=form.email.data, user=current_user.username, token=token)
+    send_change_email(to=form.email.data, user=current_user, token=token)
     flash('Confirm email sent, check your inbox.', 'info')
     return redirect(url_for('.index', username=current_user.username))
   return render_template('user/settings/change_email.html', form=form)

@@ -16,7 +16,7 @@ def push_comment_notification(photo_id, receiver, page=1):
             % (url_for('main.show_photo', photo_id=photo_id, page=page))
   notification = Notification(message=message, receiver=receiver)
   db.session.add(notification)
-  db.session.commit(notification)
+  db.session.commit()
 
 
 def push_collect_notification(collector, photo_id, receiver):

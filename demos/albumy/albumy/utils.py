@@ -6,6 +6,7 @@
 @Author  :   Alan
 @Desc    :   None
 '''
+from json import dumps
 import os
 import uuid
 import PIL
@@ -13,8 +14,9 @@ import PIL
 from PIL import Image
 from urllib.parse import urljoin, urlparse
 import PIL.Image
+import click
 from itsdangerous import BadSignature, SignatureExpired
-from itsdangerous import URLSafeTimedSerializer as Serializer 
+from itsdangerous import URLSafeSerializer as Serializer 
 from flask import current_app, flash, redirect, request, url_for
 
 from albumy.settings import Operations
@@ -23,11 +25,15 @@ from albumy.models import User
 
 
 def generate_token(user, operation, expire_in=None, **kwargs):
-  s = Serializer(current_app.config['SECRET_KEY'], expire_in)
+  s = (
+    Serializer(current_app.config['SECRET_KEY']),
+    Serializer(current_app.config['SECRET_KEY'], expire_in)
+  )[expire_in is not None]
 
   data = {'id': user.id, 'operation': operation}
   data.update(**kwargs)
-  return s.dumps(data)
+  token = s.dumps(data)
+  return token
 
 
 def validate_token(user, token, operation, new_password=None):
@@ -53,7 +59,7 @@ def validate_token(user, token, operation, new_password=None):
       return False
     user.email = new_email
   
-  db.sessoin.commit()
+  db.session.commit()
   return True
 
 

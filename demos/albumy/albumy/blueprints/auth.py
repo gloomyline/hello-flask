@@ -14,6 +14,7 @@ from albumy.extensions import db
 from albumy.models import User
 from albumy.forms.auth import ForgetPasswordForm, LoginForm, RegisterForm, ResetPasswordForm
 from albumy.utils import generate_token, redirect_back, validate_token
+from albumy.emails import send_confirm_email, send_reset_password_email
 
 
 auth_bp = Blueprint('auth', __name__)
@@ -75,7 +76,7 @@ def register():
     db.session.add(user)
     db.session.commit()
     token = generate_token(user=user, operation=Operations.CONFIRM)
-    # send_confirm_email(user=user, token=token)
+    send_confirm_email(user=user, token=token)
     flash('Confirm email sent, check your inbox', 'info')
     return redirect(url_for('.login'))
   return render_template('auth/register.html', form=form)
@@ -102,7 +103,7 @@ def resend_confirm_email():
     return redirect(url_for('main.index'))
 
   token = generate_token(user=current_user, operation=Operations.CONFIRM)
-  # send_confirm_email(user=user, token=token)
+  send_confirm_email(user=current_user, token=token)
   flash('New email sent, check your inbox', 'info')
   return redirect(url_for('main.index'))
 
@@ -117,7 +118,7 @@ def forget_password():
     user = User.query.filter_by(email=form.email.data.lower()).first()
     if user is not None:
       token = generate_token(user=user, operation=Operations.RESET_PASSWORD)
-      # send_reset_password_email(user=user, token=token)
+      send_reset_password_email(user=user, token=token)
       flash('Password reset email sent, check you inbox', 'info')
       return redirect(url_for('.login'))
     flash('Invalid email', 'warning')
