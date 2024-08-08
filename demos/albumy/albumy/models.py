@@ -123,6 +123,9 @@ class User(db.Model, UserMixin):
     self.follow(self) # follow self
     self.set_role()
 
+  def __repr__(self) -> str:
+    return f'<User{self.id} name:{self.name} username:{self.username}>'
+
   def set_password(self, password):
     self.password_hash = generate_password_hash(password)
 

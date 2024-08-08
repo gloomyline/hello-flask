@@ -8,8 +8,9 @@
 '''
 import os
 import click
-from flask import Flask
+from flask import Flask, render_template
 from flask_login import current_user
+from flask_wtf.csrf import CSRFError
 
 from albumy.settings import config
 from albumy.extensions import db, login_manager, bootstrap, moment, \
@@ -117,7 +118,29 @@ def register_commands(app):
 
 
 def register_errorhandlers(app):
-  pass
+  @app.errorhandler(400)
+  def bad_request(e):
+    return render_template('errors/400.html'), 400
+
+  @app.errorhandler(403)
+  def forbidden(e):
+    return render_template('errors/403.html'), 403
+
+  @app.errorhandler(404)
+  def page_not_found(e):
+    return render_template('errors/404.html'), 404
+
+  @app.errorhandler(413)
+  def request_entity_too_large(e):
+    return render_template('errors/413.html'), 413
+
+  @app.errorhandler(500)
+  def internal_server_error(e):
+    return render_template('errors/413.html'), 500
+
+  @app.errorhandler(CSRFError)
+  def handle_csrf_error(e):
+    return render_template('errors/400.html', description=e.description), 500
 
 
 def register_shell_context(app):
@@ -126,6 +149,7 @@ def register_shell_context(app):
     return dict(db=db, User=User, Photo=Photo, Tag=Tag,
                 Follow=Follow, Collect=Collect, Comment=Comment,
                 Notification=Notification)
+
 
 def register_template_context(app):
   @app.context_processor

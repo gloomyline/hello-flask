@@ -133,7 +133,7 @@ def reset_password(token):
 
   form = ResetPasswordForm()
   if form.validate_on_submit():
-    user = User.query.filter_by(email=form.data.lower()).first()
+    user = User.query.filter_by(email=form.email.data.lower()).first()
     if user is None:
       return redirect(url_for('main.index'))
     if validate_token(user=user, token=token, operation=Operations.RESET_PASSWORD,
