@@ -71,8 +71,8 @@ def register_commands(app):
       click.confirm(click.style('This operation will delete the database, stll continue?', fg='bright_red'), abort=True)
       db.drop_all()
       click.echo(click.style('Drop tables.', fg='blue'))
-      db.create_all()
-      click.secho('Initialized database.', fg='bright_green')
+    db.create_all()
+    click.secho('Initialized database.', fg='bright_green')
 
   @app.cli.command()
   def init():
