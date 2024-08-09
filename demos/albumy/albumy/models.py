@@ -172,7 +172,11 @@ class User(db.Model, UserMixin):
       db.session.commit()
 
   def uncollect(self, photo):
-    collect = Collect.query.with_parent(self).filter_by(collected_id=photo.id).first()
+    # collect = Collect.query.with_parent(self).filter_by(collected_id=photo.id).first()
+    collect = Collect.query.filter(
+      Collect.id == photo.id,
+      db.orm.with_parent(self, User.collections)
+    ).first()
     if collect is not None:
       db.session.delete(collect)
       db.session.commit()

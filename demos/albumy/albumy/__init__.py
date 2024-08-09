@@ -72,7 +72,7 @@ def register_commands(app):
       db.drop_all()
       click.echo(click.style('Drop tables.', fg='blue'))
       db.create_all()
-      click.secho('Initialized database', fg='bright_green')
+      click.secho('Initialized database.', fg='bright_green')
 
   @app.cli.command()
   def init():
@@ -155,7 +155,18 @@ def register_template_context(app):
   @app.context_processor
   def make_template_context():
     if current_user.is_authenticated:
-      notification_count = Notification.query.with_parent(current_user).filter_by(is_read=False).count()
+      """
+        https://docs.sqlalchemy.org/en/20/orm/queryguide/query.html 
+        Deprecated since version 2.0: 
+        The Query.with_parent() method is considered legacy as of the 1.x series of SQLAlchemy
+        and becomes a legacy construct in 2.0. Use the with_parent() standalone construct.
+        (Background on SQLAlchemy 2.0 at: SQLAlchemy 2.0 - Major Migration Guide)
+      """
+      # notification_count = Notification.query.with_parent(current_user).filter_by(is_read=False).count()
+      notification_count = Notification.query.filter(
+        Notification.is_read == False,
+        db.orm.with_parent(current_user, User.notifications), 
+      ).count()
     else:
       notification_count = None
     return dict(notification_count=notification_count, is_development=app.config['DEBUG'])

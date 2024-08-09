@@ -14,7 +14,7 @@ from albumy.models import User
 
 
 class LoginForm(FlaskForm):
-  email = StringField('Email', validators=[DataRequired(), Length(1, 20)])
+  email = StringField('Email', validators=[DataRequired(), Length(1, 64), Email()])
   password = PasswordField('Password', validators=[DataRequired(), Length(8, 128)])
   remember_me = BooleanField('Remember me')
   submit = SubmitField()
