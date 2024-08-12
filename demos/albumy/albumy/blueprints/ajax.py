@@ -45,14 +45,20 @@ def collectors_count(photo_id):
 
 
 @ajax_bp.route('/my-collections-count')
-def my_photos_count():
-  count = len(current_user.collections)
+def my_collections_count():
+  if current_user.is_authenticated:
+    count = len(current_user.collections)
+  else:
+    count = 0
   return jsonify(count=count)
 
 
 @ajax_bp.route('/my-followings-count')
 def my_followings_count():
-  count = current_user.following.count()
+  if current_user.is_authenticated:
+    count = current_user.following.count() - 1
+  else:
+    count = 0
   return jsonify(count=count)
 
 
@@ -98,7 +104,7 @@ def follow(username):
 
   user = User.query.filter_by(username=username).first_or_404()
   if current_user.is_following(user):
-    return jsonify(message='Already followed'), 400
+    return jsonify(message='Already followed.'), 400
 
   current_user.follow(user)
   if user.receive_follow_notification:
@@ -113,7 +119,7 @@ def unfollow(username):
   
   user = User.query.filter_by(username=username).first_or_404()
   if not current_user.is_following(user):
-    return jsonify(message='Not followed yet'), 400
+    return jsonify(message='Not followed yet.'), 400
 
   current_user.unfollow(user)
-  return jsonify(message='User unfollowed.')
+  return jsonify(message='Follow canceled.')
