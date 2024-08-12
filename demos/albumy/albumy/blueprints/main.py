@@ -101,6 +101,7 @@ def read_notification(notification_id):
 
 
 @main_bp.route('/notifications/read/all', methods=['POST'])
+@login_required
 def read_all_notifications():
   for notification in current_user.notifications:
     notification.is_read = True
@@ -178,7 +179,7 @@ def photo_prev(photo_id):
   photo_p = Photo.query.with_parent(photo.author).filter(Photo.id < photo_id) \
                         .order_by(Photo.id.desc()).first()
   if photo_p is None:
-    flash('It is already the last one.', 'info')
+    flash('It is already the first one.', 'info')
     return redirect(url_for('.show_photo', photo_id=photo.id))
   return redirect(url_for('.show_photo', photo_id=photo_p.id))
 
@@ -202,7 +203,7 @@ def collect(photo_id):
   return redirect(url_for('.show_photo', photo_id=photo_id))
 
 
-@main_bp.route('/uncollect/<int:photo_id>')
+@main_bp.route('/uncollect/<int:photo_id>', methods=['POST'])
 @login_required
 def uncollect(photo_id):
   photo = Photo.query.get_or_404(photo_id)
@@ -327,7 +328,7 @@ def set_comment(photo_id):
     photo.can_comment = False
     flash('Comment disabled.', 'info')
   else:
-    photo.can_camment = True
+    photo.can_comment = True
     flash('Comment enabled.', 'info')
   db.session.commit()
   return redirect(url_for('.show_photo', photo_id=photo_id))
@@ -362,7 +363,7 @@ def delete_photo(photo_id):
   photo_n = Photo.query.with_parent(photo.author) \
               .filter(Photo.id < photo.id).order_by(Photo.id.desc()).first()
   if photo_n is None:
-    photo_p = Photo.query.with_parent(photo.autho) \
+    photo_p = Photo.query.with_parent(photo.author) \
               .filter(Photo.id > photo.id).order_by(Photo.id.asc()).first()
     if photo_p is None:
       return redirect(url_for('user.index', username=photo.author.username))

@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 import unittest
+import warnings
 
 from flask import url_for
+from sqlalchemy.exc import LegacyAPIWarning
 
 from albumy import create_app
 from albumy.extensions import db
@@ -11,6 +13,10 @@ from albumy.models import User, Role, Photo, Comment, Tag
 class BaseTestCase(unittest.TestCase):
 
   def setUp(self):
+    # TODO: ignore warnings, will resolve them in the future
+    warnings.simplefilter('ignore', ResourceWarning)
+    warnings.simplefilter('ignore', LegacyAPIWarning)
+
     app = create_app('testing')
     self.context = app.test_request_context()
     self.context.push()
@@ -20,15 +26,15 @@ class BaseTestCase(unittest.TestCase):
     db.create_all()
     Role.init_role()
 
-    admin_user = User(email='admin@helloflask.com', name='Admin', username='admin', confirmed=True, active=True)
+    admin_user = User(email='admin@helloflask.com', name='Admin', username='admin', confirmed=True, active=True, role_id=4)
     admin_user.set_password('12345678')
-    normal_user = User(email='normal@helloflask.com', name='Normal User', username='normal', confirmed=True, active=True)
+    normal_user = User(email='normal@helloflask.com', name='Normal User', username='normal', confirmed=True, active=True, role_id=2)
     normal_user.set_password('12345678')
     unconfirmed_user = User(email='unconfirmed@helloflask.com', name='Unconfirmed User', username='unconfirmed',
                             confirmed=False, active=True)
     unconfirmed_user.set_password('12345678')
     locked_user = User(email='locked@helloflask.com', name='Locked User', username='locked',
-                        confirmed=True, locked=True, active=True)
+                        confirmed=True, locked=True, active=True, role_id=1)
     locked_user.set_password('12345678')
     locked_user.lock()
 
