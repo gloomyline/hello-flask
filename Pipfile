@@ -27,6 +27,7 @@ watchdog = "*"
 faker = "*"
 flask-debugtoolbar = "*"
 pytest = "*"
+selenium = "*"
 
 [requires]
 python_version = "3.13"
