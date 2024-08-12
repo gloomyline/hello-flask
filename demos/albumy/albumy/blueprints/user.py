@@ -65,7 +65,7 @@ def follow(username):
     return redirect(url_for('.index', username=username))
 
   current_user.follow(user)
-  flash('User Followed.', 'info')
+  flash('User followed.', 'info')
   if user != current_user and user.receive_follow_notification:
     push_follow_notification(follower=current_user, receiver=user)
   return redirect_back()
@@ -76,10 +76,10 @@ def unfollow(username):
   user = User.query.filter_by(username=username).first_or_404()
   if not current_user.is_following(user):
     flash('User has not been followed.', 'warning')
-    return redirect(url_for('user.inex', username=username))
+    return redirect(url_for('user.index', username=username))
   
   current_user.unfollow(user)
-  flash('User Unfollowed.', 'info')
+  flash('User unfollowed.', 'info')
   return redirect_back()
   
 
@@ -147,7 +147,7 @@ def upload_avatar():
     filename = avatars.save_avatar(image)
     current_user.avatar_raw = filename
     db.session.commit()
-    flash('Image upload, please crop.', 'success')
+    flash('Image uploaded, please crop.', 'success')
   flash_errors(form)
   return redirect(url_for('.change_avatar'))
 
@@ -235,7 +235,7 @@ def privacy_setting():
   if form.validate_on_submit():
     current_user.public_collections = form.public_collections.data
     db.session.commit()
-    flash('Privacy setting updated.', 'success')
+    flash('Privacy settings updated.', 'success')
     return redirect(url_for('.index', username=current_user.username))
   form.public_collections.data = current_user.public_collections
   return render_template('user/settings/edit_privacy.html', form=form)
@@ -249,5 +249,5 @@ def delete_account():
     db.session.delete(current_user._get_current_object())
     db.session.commit()
     flash('You are free, goodbye!', 'success')
-    return redirect(url_for('main.inex'))
+    return redirect(url_for('main.index'))
   return render_template('user/settings/delete_account.html', form=form)

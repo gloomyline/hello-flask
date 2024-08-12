@@ -96,7 +96,7 @@ def block_user(user_id):
 def unblock_user(user_id):
   user = User.query.get_or_404(user_id)
   user.unblock()
-  flash('Account unblocked.', 'info')
+  flash('Block canceled.', 'info')
   return redirect_back()
 
 
@@ -119,7 +119,7 @@ def lock_user(user_id):
 def unlock_user(user_id):
   user = User.query.get_or_404(user_id)
   user.unlock()
-  flash('Account unlocked.', 'info')
+  flash('Lock canceled.', 'info')
   return redirect_back()
 
 
