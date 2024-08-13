@@ -13,3 +13,7 @@ uploads/avatars/*
 # whooshee files
 whooshee/*
 !whooshee/.gitkeep
+
+# test screenshots pngs
+tests/ui_screenshots/*
+!tests/ui_screenshots/.gitkeep

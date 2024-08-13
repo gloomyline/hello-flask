@@ -33,7 +33,7 @@
                     {{ render_nav_item('main.index', 'Home') }}
                     {{ render_nav_item('main.explore', 'Explore') }}
                     <form class="form-inline my-2 my-lg-0" action="{{ url_for('main.search') }}">
-                        <input type="text" name="q" class="form-control mr-sm-1" placeholder="Photo, tag or user"
+                        <input type="text" name="q" value="{{ q|default('') }}" class="form-control mr-sm-1" placeholder="Photo, tag or user"
                                required>
                         <button class="btn btn-light my-2 my-sm-0" type="submit">
                             <span class="oi oi-magnifying-glass"></span>
@@ -52,7 +52,7 @@
                         <span class="oi oi-cloud-upload"></span>&nbsp;&nbsp;
                     </a>
                     <div class="dropdown nav-item">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
+                        <a id="personal-dropdown" href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button"
                            aria-expanded="false">
                             <img class="avatar-xs"
                                  src="{{ url_for('main.get_avatar', filename=current_user.avatar_s) }}">

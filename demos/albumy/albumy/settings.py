@@ -79,11 +79,18 @@ class DevelopmentConfig(BaseConfig):
 
 class TestingConfig(BaseConfig):
     TESTING = True
+
+    # Enable the toolbar? default value is app.debug
+    DEBUG_TB_ENABLED = False
     WTF_CSRF_ENABLED = False
+
     SQLALCHEMY_DATABASE_URI = 'sqlite:///'  # in-memory database
+
+    ALBUMY_UI_TEST_SCREENSHOTS_PATH = os.path.join(basedir, 'tests/ui_screenshots')
 
 
 class ProductionConfig(BaseConfig):
+    DEBUG_TB_ENABLED = False
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL',
       prefix + os.path.join(basedir, 'data.db'))
 
