@@ -14,7 +14,7 @@ from flask_wtf.csrf import CSRFError
 
 from albumy.settings import config
 from albumy.extensions import db, login_manager, bootstrap, moment, \
-  mail, csrf, avatars, whooshee, dropzone, migrate, debug_toolbar
+    mail, csrf, avatars, whooshee, dropzone, migrate, debug_toolbar
 from albumy.models import Collect, Comment, Follow, Notification, Photo, Role, Tag, User
 from albumy.blueprints.main import main_bp
 from albumy.blueprints.auth import auth_bp
@@ -68,7 +68,10 @@ def register_commands(app):
   def initdb(drop):
     """Initialize the database."""
     if drop:
-      click.confirm(click.style('This operation will delete the database, stll continue?', fg='bright_red'), abort=True)
+      click.confirm(
+          click.style('This operation will delete the database, stll continue?', fg='bright_red'),
+          abort=True
+      )
       db.drop_all()
       click.echo(click.style('Drop tables.', fg='blue'))
     db.create_all()
@@ -93,8 +96,8 @@ def register_commands(app):
   def forge(user, follow, photo, tag, collect, comment):
     """Generate fake data."""
     from albumy.fakes import fake_admin, fake_comment, fake_follow, fake_photo, \
-      fake_tag, fake_user, fake_collect
-    
+        fake_tag, fake_user, fake_collect
+ 
     db.drop_all()
     db.create_all()
 
@@ -156,16 +159,16 @@ def register_template_context(app):
   def make_template_context():
     if current_user.is_authenticated:
       """
-        https://docs.sqlalchemy.org/en/20/orm/queryguide/query.html 
-        Deprecated since version 2.0: 
-        The Query.with_parent() method is considered legacy as of the 1.x series of SQLAlchemy
-        and becomes a legacy construct in 2.0. Use the with_parent() standalone construct.
-        (Background on SQLAlchemy 2.0 at: SQLAlchemy 2.0 - Major Migration Guide)
+      https://docs.sqlalchemy.org/en/20/orm/queryguide/query.html
+      Deprecated since version 2.0:
+      The Query.with_parent() method is considered legacy as of the 1.x series of SQLAlchemy
+      and becomes a legacy construct in 2.0. Use the with_parent() standalone construct.
+      (Background on SQLAlchemy 2.0 at: SQLAlchemy 2.0 - Major Migration Guide)
       """
       # notification_count = Notification.query.with_parent(current_user).filter_by(is_read=False).count()
       notification_count = Notification.query.filter(
         Notification.is_read == False,
-        db.orm.with_parent(current_user, User.notifications), 
+        db.orm.with_parent(current_user, User.notifications),
       ).count()
     else:
       notification_count = None
