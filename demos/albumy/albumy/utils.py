@@ -13,13 +13,18 @@ import PIL
 from PIL import Image
 from urllib.parse import urljoin, urlparse
 import PIL.Image
+from flask_login import current_user
 from itsdangerous import BadSignature, SignatureExpired
 from itsdangerous import URLSafeSerializer as Serializer 
 from flask import current_app, flash, redirect, request, url_for
 
 from albumy.settings import Operations
-from albumy.extensions import db
+from albumy.extensions import db, cache
 from albumy.models import User
+
+
+def is_login():
+  return current_user.is_authenticated
 
 
 def generate_token(user, operation, expire_in=None, **kwargs):
@@ -106,3 +111,8 @@ def flash_errors(form):
         getattr(form, field).label.text,
         error
       ))
+
+
+def clear_cache(keys):
+  for key in keys:
+    cache.delete(key)

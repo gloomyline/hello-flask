@@ -13,7 +13,7 @@ from flask_login import current_user
 from flask_wtf.csrf import CSRFError
 
 from albumy.settings import config
-from albumy.extensions import db, login_manager, bootstrap, moment, \
+from albumy.extensions import db, cache, login_manager, bootstrap, moment, \
     mail, csrf, avatars, whooshee, dropzone, migrate, rich, debug_toolbar
 from albumy.models import Collect, Comment, Follow, Notification, Photo, Role, Tag, User
 from albumy.blueprints.main import main_bp
@@ -42,6 +42,7 @@ def create_app(config_name=None):
 
 def register_extensions(app):
   db.init_app(app)
+  cache.init_app(app)
   login_manager.init_app(app)
   bootstrap.init_app(app)
   moment.init_app(app)

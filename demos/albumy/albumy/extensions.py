@@ -7,6 +7,7 @@
 @Desc    :   None
 '''
 from flask_sqlalchemy import SQLAlchemy
+from flask_caching import Cache
 from flask_login import LoginManager, AnonymousUserMixin
 from flask_bootstrap import Bootstrap4 as Bootstrap
 from flask_moment import Moment
@@ -21,6 +22,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 
 db = SQLAlchemy()
+cache = Cache()
 login_manager = LoginManager()
 bootstrap = Bootstrap()
 moment = Moment()

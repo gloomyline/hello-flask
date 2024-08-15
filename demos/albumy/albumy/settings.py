@@ -70,11 +70,15 @@ class BaseConfig:
 
     DEBUG_TB_INTERCEPT_REDIRECTS = False
 
+    # disable warning of cache when default value is null
+    CACHE_NO_NULL_WARNING = True
+
 
 class DevelopmentConfig(BaseConfig):
     SQLALCHEMY_DATABASE_URI = \
       prefix + os.path.join(basedir, 'data-dev.db')
-    REDIS_URL = "redis://localhost"
+    CACHE_TYPE = 'redis'
+    REDIS_URL = "redis://127.0.0.1:6379"
 
 
 class TestingConfig(BaseConfig):
@@ -85,6 +89,7 @@ class TestingConfig(BaseConfig):
     WTF_CSRF_ENABLED = False
 
     SQLALCHEMY_DATABASE_URI = 'sqlite:///'  # in-memory database
+    CACHE_TYPE = 'simple' # in-memory cache
 
     ALBUMY_UI_TEST_SCREENSHOTS_PATH = os.path.join(basedir, 'tests/ui_screenshots')
 
@@ -93,6 +98,8 @@ class ProductionConfig(BaseConfig):
     DEBUG_TB_ENABLED = False
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL',
       prefix + os.path.join(basedir, 'data.db'))
+    CACHE_TYPE = 'redis'
+    
 
 
 config = {

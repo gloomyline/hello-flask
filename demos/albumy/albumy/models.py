@@ -9,12 +9,12 @@
 from datetime import datetime, UTC
 import os
 
-from flask import current_app
+from flask import current_app, url_for
 from flask_login import UserMixin
 from flask_avatars import Identicon
 
 from werkzeug.security import check_password_hash, generate_password_hash
-from albumy.extensions import db, whooshee
+from albumy.extensions import db, whooshee, cache
 
 
 # relationship table
@@ -145,12 +145,14 @@ class User(db.Model, UserMixin):
       follow = Follow(follower=self, followed=user)
       db.session.add(follow)
       db.session.commit()
+      cache.delete('view/%s' % url_for('main.index'))
 
   def unfollow(self, user):
     follow = self.following.filter_by(followed_id=user.id).first()
     if follow:
       db.session.delete(follow)
       db.session.commit()
+      cache.delete('view/%s' % url_for('main.index'))
 
   def is_following(self, user):
     if not user.id:

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "54e2696b6904575e3e240ee0f6bfb86d49b1e1e3c0b7eb3b06fcd90589e0a847"
+            "sha256": "7896f45ff7fa16dc4f22adf4e8e12b36136ecc7c60c92ada8633ff4fa3e1867a"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -57,6 +57,14 @@
             "index": "pypi",
             "version": "==2.4.0"
         },
+        "cachelib": {
+            "hashes": [
+                "sha256:38222cc7c1b79a23606de5c2607f4925779e37cdcea1c2ad21b8bae94b5425a5",
+                "sha256:811ceeb1209d2fe51cd2b62810bd1eccf70feba5c52641532498be5c675493b3"
+            ],
+            "markers": "python_version >= '3.7'",
+            "version": "==0.9.0"
+        },
         "click": {
             "hashes": [
                 "sha256:ae74fb96c20a0277a1d615f1e4d73c8414f5a98db8b799a7931d1582f3390c28",
@@ -106,6 +114,15 @@
             "index": "pypi",
             "markers": "python_version >= '3.8' and python_version < '4.0'",
             "version": "==4.0.0"
+        },
+        "flask-caching": {
+            "hashes": [
+                "sha256:51771c75682e5abc1483b78b96d9131d7941dc669b073852edfa319dd4e29b6e",
+                "sha256:d7e4ca64a33b49feb339fcdd17e6ba25f5e01168cf885e53790e885f83a4d2cf"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.8'",
+            "version": "==2.3.0"
         },
         "flask-ckeditor": {
             "hashes": [
@@ -498,6 +515,15 @@
                 "sha256:328171f4e3623139da4983451950b28e95ac706e13f3f2630a879749e7a8b319"
             ],
             "version": "==2024.1"
+        },
+        "redis": {
+            "hashes": [
+                "sha256:0c5b10d387568dfe0698c6fad6615750c24170e548ca2deac10c649d463e9870",
+                "sha256:56134ee08ea909106090934adc36f65c9bcbbaecea5b21ba704ba6fb561f8eb4"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.7'",
+            "version": "==5.0.8"
         },
         "rich": {
             "hashes": [

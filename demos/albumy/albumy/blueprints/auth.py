@@ -13,7 +13,7 @@ from albumy.settings import Operations
 from albumy.extensions import db
 from albumy.models import User
 from albumy.forms.auth import ForgetPasswordForm, LoginForm, RegisterForm, ResetPasswordForm
-from albumy.utils import generate_token, redirect_back, validate_token
+from albumy.utils import generate_token, redirect_back, validate_token, clear_cache
 from albumy.emails import send_confirm_email, send_reset_password_email
 
 
@@ -31,6 +31,7 @@ def login():
     if user is not None and user.validate_password(form.password.data):
       if login_user(user, form.remember_me.data):
         flash('Login success.', 'info')
+        clear_cache([f'view/{url_for('main.index')}'])
         return redirect_back()
       else:
         flash('Your account is blocked.', 'warning')
