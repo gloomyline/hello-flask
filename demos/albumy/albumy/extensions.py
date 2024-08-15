@@ -16,6 +16,7 @@ from flask_avatars import Avatars
 from flask_whooshee import Whooshee
 from flask_dropzone import Dropzone
 from flask_migrate import Migrate
+from flask_rich import RichApplication as Rich
 from flask_debugtoolbar import DebugToolbarExtension
 
 
@@ -29,6 +30,7 @@ avatars = Avatars()
 whooshee = Whooshee()
 dropzone = Dropzone()
 migrate = Migrate()
+rich = Rich()
 debug_toolbar = DebugToolbarExtension()
 
 

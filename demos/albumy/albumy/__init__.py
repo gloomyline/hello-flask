@@ -14,7 +14,7 @@ from flask_wtf.csrf import CSRFError
 
 from albumy.settings import config
 from albumy.extensions import db, login_manager, bootstrap, moment, \
-    mail, csrf, avatars, whooshee, dropzone, migrate, debug_toolbar
+    mail, csrf, avatars, whooshee, dropzone, migrate, rich, debug_toolbar
 from albumy.models import Collect, Comment, Follow, Notification, Photo, Role, Tag, User
 from albumy.blueprints.main import main_bp
 from albumy.blueprints.auth import auth_bp
@@ -51,6 +51,7 @@ def register_extensions(app):
   whooshee.init_app(app)
   dropzone.init_app(app)
   migrate.init_app(app, db)
+  rich.init_app(app)
   debug_toolbar.init_app(app)
 
 

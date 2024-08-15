@@ -21,6 +21,7 @@ flask-avatars = "*"
 flask-whooshee = "*"
 flask-dropzone = "*"
 pillow = "*"
+flask-rich = "*"
 
 [dev-packages]
 watchdog = "*"
