@@ -16,7 +16,7 @@ from albumy.models import Collect, Comment, Follow, Notification, Photo, Tag, Us
 from albumy.forms.main import CommentForm, TagForm, DescriptionForm
 from albumy.decorators import confirm_required, permission_required
 from albumy.notifications import push_collect_notification, push_comment_notification
-from albumy.utils import is_login, flash_errors, redirect_back, rename_image, resize_image
+from albumy.utils import flash_errors, redirect_back, rename_image, resize_image
 
 
 main_bp = Blueprint('main', __name__)
@@ -144,7 +144,7 @@ def upload():
 
 
 @main_bp.route('/photo/<int:photo_id>')
-@cache.cached(timeout=15*60, query_string=True)
+# @cache.cached(timeout=15*60, query_string=True)
 def show_photo(photo_id):
   photo = Photo.query.get_or_404(photo_id)
   page = request.args.get('page', 1, type=int)
