@@ -9,9 +9,12 @@
         <title>{% block title %}{% endblock %} - Albumy</title>
         <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
         {% block styles %}
-            {{ bootstrap.load_css() }}
+            {# {{ bootstrap.load_css() }}
             <link rel="stylesheet" href="{{ url_for('static', filename='open-iconic/font/css/open-iconic-bootstrap.css') }}">
-            <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+            <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> #}
+            {% assets "css_all" %}
+                <link rel="stylesheet" href="{{ ASSET_URL }}">
+            {% endassets %}
         {% endblock styles %}
     {% endblock head %}
 </head>
@@ -114,11 +117,14 @@
 <div id="toast"></div>
 
 {% block scripts %}
-    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    {# <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     {{ moment.include_moment(local_js=url_for('static', filename='js/moment-with-locales.min.js')) }}
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script> #}
+    {% assets "js_all" %}
+        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
     <script type="text/javascript">
         var csrf_token = "{{ csrf_token() }}";
         {% if current_user.is_authenticated %}

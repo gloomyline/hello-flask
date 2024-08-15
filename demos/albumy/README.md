@@ -50,3 +50,11 @@
   ```
   flake8 [package name]
   ```
+
+### ASSETS BUNDLE
+
+1. build
+
+  ```
+  flask assets build
+  ```

@@ -17,3 +17,6 @@ whooshee/*
 # test screenshots pngs
 tests/ui_screenshots/*
 !tests/ui_screenshots/.gitkeep
+
+# assets build cache
+**/*/.webassets-cache

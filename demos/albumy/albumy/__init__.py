@@ -16,6 +16,7 @@ from albumy.settings import config
 from albumy.extensions import db, cache, login_manager, bootstrap, moment, \
     mail, csrf, avatars, whooshee, dropzone, migrate, rich, debug_toolbar
 from albumy.models import Collect, Comment, Follow, Notification, Photo, Role, Tag, User
+from albumy.bundles import assets
 from albumy.blueprints.main import main_bp
 from albumy.blueprints.auth import auth_bp
 from albumy.blueprints.user import user_bp
@@ -52,6 +53,7 @@ def register_extensions(app):
   whooshee.init_app(app)
   dropzone.init_app(app)
   migrate.init_app(app, db)
+  assets.init_app(app)
   rich.init_app(app)
   debug_toolbar.init_app(app)
 

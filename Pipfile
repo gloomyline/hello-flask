@@ -24,6 +24,9 @@ pillow = "*"
 flask-rich = "*"
 redis = "*"
 flask-caching = "*"
+flask-assets = "*"
+jsmin = "*"
+cssmin = "*"
 
 [dev-packages]
 watchdog = "*"

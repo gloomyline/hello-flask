@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "7896f45ff7fa16dc4f22adf4e8e12b36136ecc7c60c92ada8633ff4fa3e1867a"
+            "sha256": "09a84e3620598650e6e6739e81482e68d1f0a8b56281c0ec54d82c0d278bb862"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -81,6 +81,13 @@
             "markers": "platform_system == 'Windows'",
             "version": "==0.4.6"
         },
+        "cssmin": {
+            "hashes": [
+                "sha256:e012f0cc8401efcf2620332339011564738ae32be8c84b2e43ce8beaec1067b6"
+            ],
+            "index": "pypi",
+            "version": "==0.2.0"
+        },
         "dnspython": {
             "hashes": [
                 "sha256:5ef3b9680161f6fa89daf8ad451b5f1a33b18ae8a1c6778cdf4b43f08c0a6e50",
@@ -97,6 +104,14 @@
             "index": "pypi",
             "markers": "python_version >= '3.8'",
             "version": "==3.0.3"
+        },
+        "flask-assets": {
+            "hashes": [
+                "sha256:a56c476b15f84701712cc3b4b4a001ebbe62b1dcbe81c23f96fbe6f261b75324",
+                "sha256:f84d6532ffe59c9ff352885e8740ff4da25c0bcfacd805f0a806815e44354813"
+            ],
+            "index": "pypi",
+            "version": "==2.1.0"
         },
         "flask-avatars": {
             "hashes": [
@@ -234,6 +249,13 @@
             ],
             "markers": "python_version >= '3.7'",
             "version": "==3.1.4"
+        },
+        "jsmin": {
+            "hashes": [
+                "sha256:c0959a121ef94542e807a674142606f7e90214a2b3d1eb17300244bbb5cc2bfc"
+            ],
+            "index": "pypi",
+            "version": "==3.0.1"
         },
         "mako": {
             "hashes": [
@@ -611,6 +633,13 @@
             ],
             "markers": "python_version >= '3.8'",
             "version": "==4.12.2"
+        },
+        "webassets": {
+            "hashes": [
+                "sha256:167132337677c8cedc9705090f6d48da3fb262c8e0b2773b29f3352f050181cd",
+                "sha256:a31a55147752ba1b3dc07dee0ad8c8efff274464e08bbdb88c1fd59ffd552724"
+            ],
+            "version": "==2.0"
         },
         "webencodings": {
             "hashes": [
